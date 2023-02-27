@@ -1,0 +1,324 @@
+//---- Settings
+
+//---- Utils
+
+//---- Components
+
+//---- Generics
+@import 'generics/reset';
+
+
+//------------------------------------
+//------------- HEADER ---------------
+//------------------------------------
+.Header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #000;
+    padding: 0 1.5em 0 0;
+    top: 0;
+
+    &__image{ width: 10em }
+    &__h1{ font-size: 1.5em }
+}
+
+//------------------------------------
+//------------- MAIN -----------------
+//------------------------------------
+.Main{
+    display: grid;
+    grid-template-columns: 20% 80%;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+//--------------------------------------------------------------------------------------
+//--------------------------------- VEHICLES SECTION -----------------------------------
+//--------------------------------------------------------------------------------------
+.Main__containerVehicles{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(13em,17em));
+    grid-template-rows: auto;
+    justify-content: center;
+    gap: 1.5em 1em;
+    padding: 2em 1em;
+}
+
+//--------------------------- FILTERS
+.FiltersContainer{
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+    margin-top: 2em;
+    padding-left: 1em;
+    height: fit-content ;
+
+    &::after{
+        content: "";
+        position: absolute;
+        right: -2em;
+        top: 0;
+        width: 1px;
+        height: 120%;
+        background-color: rgb(131, 131, 131);
+    }
+
+    &__select{
+        font-size: 1.2em;
+        outline: none;
+        width: 100%;
+    }
+
+    &__checkboxContainer{ margin-left: .5em }
+    &__checkboxContainer--sold{ margin-left: 0 }
+    
+    &__submitFilters{ cursor: pointer }
+}
+
+//---------------------- VEHICLE CARD
+.Vehicle{ 
+    border: .02em solid rgb(71, 71, 71); 
+
+    &__imageContainer{ height: 11em; position: relative }
+    &__img{ width: 100%; height: 100%; object-fit:cover; user-select: none }
+    
+    &__model, &__type{
+        position: absolute;
+        right: -.5em;
+        background-color: rgb(212, 212, 212);
+        color: rgb(44, 44, 44);
+        padding: .3em .5em;
+        font-weight: 700;
+        box-shadow: -1px 1px 5px rgba(0,0,0,0.5);
+    }
+    &__model{ top: -.5em }
+    &__type{ top: 2.2em }
+   
+    &__noAvailable{
+        position: absolute;
+        color: #7e3636;
+        font-size: 2em;
+        left: -.3em;
+        top: -.3em;
+        background-color: #242424;
+    }
+    
+    
+    &__info{ 
+        display: flex; 
+        justify-content: space-between; 
+        padding: 0 .8em; 
+        font-size: 1.2em; 
+        margin-top: .2em; 
+        color: rgb(165, 165, 165);
+    }
+    &__name{ margin: .4em 0; text-align: center; font-size: 1.5em; cursor: pointer }
+    &__name a{ color: #fff }
+    &__name:hover{ text-decoration: underline }
+
+}
+
+//-------------------------- HANDLER PAGES
+.HandlerPages{ 
+    grid-column: 3 span;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: .5em;
+
+    &__span{ font-size: 1.8em }
+    &__span svg{
+        vertical-align: text-top;
+        cursor: pointer;
+    }
+}
+
+
+
+//---------------------------------------------------------------------------------
+//------------------------------ BOXES CONTAINER-----------------------------------
+//---------------------------------------------------------------------------------
+.ContainerBoxes{
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: rgba(0,0,0,0.4);
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    & > div{  
+        width: 90%;
+        max-height: 90%;
+        padding: 3em 1em 1em 1em;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        background-color: #4d4d4d;
+    }
+    
+}
+
+
+//------------------------- UPLOAD FORM BOX
+.UploadForm{
+    display: grid;
+    grid-template-columns: repeat(4, 10em);
+    grid-template-rows: 7em repeat(6, 2em) 2.5em;
+    row-gap: 2em;
+    column-gap: 1em;
+    margin-left: 10em;
+  
+    &__inputContainer{ position: relative; grid-column: 2 span }
+    &__inputContainer input{ 
+      width: 100%; 
+      padding: 1em;
+      background-color: #242424;
+      outline: none;
+      border: .1em solid rgb(153, 151, 151);
+      border-radius: .6em;
+    }
+    &__label{
+      position: absolute;
+      top: 70%;
+      background-color: #242424;
+      padding: .2em;
+      transform-origin: left;
+      transform: translate(.5em,-50%);
+      transition: transform .2s ease-in-out;
+      color: rgb(153, 151, 151);
+    }&__label--active{ transform: translate(.7em, -2.3em)  scale(.8) }
+    
+    
+    /*----------  Images ----------*/
+    &__inputImageContainer{ 
+      grid-column: 1 span; 
+      background-color: #4d4d4d;
+      display: flex;
+      justify-content: center; 
+      align-items: center;
+      border-radius: .3em;
+    }&__inputImageContainer input{ display: none }
+    &__labelImage{
+      background-color: #242424a4; 
+      padding: .5em;
+      vertical-align: text-top;
+      border-radius: 1em;
+      cursor: pointer;
+    }&__labelImage:hover{ opacity: .7; }
+    
+    &__inputImagesContainer{ grid-column: 3 span; margin-left: 2em; align-self: center }
+    
+    /*---------------CONFIG */
+    &__inputPriceContainer{ grid-column: 4 span }
+    &__submitButton{ grid-column: 4 span; cursor: pointer }
+    
+    &__obligatory{
+      position: absolute;
+      right: .3em;
+      top: 50%;
+      color: rgb(153, 151, 151);
+      background-color: #242424;
+      font-size: 2em;
+    }
+
+}
+
+
+//------------------------- VEHICLE BOX
+.VehicleBox{
+    position: relative;
+    transform: scale(.05);
+    transition: transform .3s ease-in;
+    overflow-y: scroll;
+    &--active{ transform: scale(1) }
+
+    //-------------------- Exit button
+    &__exitButton{
+        position: absolute;
+        top: .2em;
+        right: .5em;
+        font-size: 2em;
+        color: aliceblue;
+    }
+
+    //-------------------- Image section
+    &__imagesContainer{
+        width: 90%;
+        height: 30em;
+        position: relative;
+        user-select: none;
+    }
+    &__arrow{
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 2.5em;
+        background-color: #242424;
+        cursor: pointer;
+    
+        &--left{ left: 0 }
+        &--right{ right: 0 }
+    }
+    &__image{
+        width: 100%;
+        height: 100%;
+
+        & img{
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+    }
+
+    //------------------------ Main data
+    &__mainDataContainer{
+        display: grid;
+        width: 50%;
+        // justify-items: center;
+        grid-template-columns: 1fr 1fr;
+        gap: .5em 1em;
+    }
+    &__mainData{
+        border-bottom: #6d6d6d 2px solid;
+    }
+
+    //------------------------- Extra data
+    &__h3{ width: 50%; margin-top: 2em; margin-bottom: .5em }
+    &__extraData--error{
+        display: flex;
+        align-items: center;
+        gap: .2em;
+        width: 45%;
+    }
+
+    //------------------------- Bottom section
+    &__bottomContainer{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 3em;
+        width: 50%;
+    }
+    // &__optionsContainer{}
+    &__option{
+        //background-color: #6d6d6d;
+        border: .03em solid #fff;
+        color: #fff;
+        padding: .5em;
+
+        &:nth-child(2){ margin-left: 2em; }
+    }
+    &__price{
+        font-weight: 800;
+        background-color: #6d6d6d;
+        padding: .5em;
+    }  
+    &__soldMessage{ font-weight: 700;  font-size: 1.7em; color: #9c9c9c }
+}
+
+
+//------------------------- EDIT BOX
