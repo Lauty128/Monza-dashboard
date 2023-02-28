@@ -1,8 +1,5 @@
 //----- Dependencies
-import { vehiclesContext } from "../context/vehicles.context";
-
-//----- Services
-    import { getFiltersVehicles, getVehicles } from "../services/getVehicles";
+import { vehiclesContext } from "../../../context/vehicles.context";
 
 //----- Hooks
     import { useContext } from 'react'
@@ -10,17 +7,13 @@ import { vehiclesContext } from "../context/vehicles.context";
 //----- Assets
     import { MdRestartAlt } from 'react-icons/md'
 
-//----- Utils
-    import filtersHandler from '../utils/filters'
 
-
-export default function Filters(props){
+export function Filters(props){
 
     const { filters, setFilters, setPage, filterVehicles } = useContext(vehiclesContext)
     
     async function submitHandler(e){
         e.preventDefault()
-        console.log(filters);
         setPage(1)
         filterVehicles()
     }
@@ -33,10 +26,14 @@ export default function Filters(props){
     }
 
     function filtersChange(target){
-        const { name , value } = target
+        const { name , value , type } = target
+        if(type === 'checkbox'){
+            if(!target.checked) return setFilters({ ...filters, [name]:undefined })
+            if(target.name !== 'sale_date') filtersCheckbox(target);
+        }
+
         if(value === "") return setFilters({ ...filters, [name]:undefined })
         setFilters({...filters, [name]:value})
-        if(target.type === 'checkbox') filtersCheckbox(target);
     }
 
     function filtersCheckbox(target){
@@ -46,8 +43,7 @@ export default function Filters(props){
                 document.getElementById(element).checked = false
             }
         })
-
-        if(target.checked === false) setFilters({ ...filters, type:undefined })
+        //if(target.checked === false) setFilters({ ...filters, type:undefined })
     }
 
     return(

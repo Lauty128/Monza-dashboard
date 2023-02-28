@@ -2,7 +2,7 @@
 import { FaAngleRight, FaAngleLeft } from 'react-icons/fa'
 
 
-export default function Page({ props }){
+export function Page({ props }){
 
     const { page , filterVehicles } = props
 

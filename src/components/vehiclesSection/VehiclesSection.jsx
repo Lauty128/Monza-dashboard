@@ -3,11 +3,15 @@
     import { vehiclesContext } from '../../context/vehicles.context';
 
 //----- Components
-    import VehicleCard from './VehicleCard'
-    import Page from './Pages';
+    import { VehicleCard } from './VehicleCard'
+    import { Page } from './handlers';
+    import { Link } from 'react-router-dom';
+
+//----- Assets
+import { MdRestartAlt } from 'react-icons/md'
 
 
-export default function VehiclesSection(props){
+export function VehiclesSection(props){
 
     const { vehicles, page, filterVehicles } = useContext(vehiclesContext)
     
@@ -16,12 +20,24 @@ export default function VehiclesSection(props){
     return(
         <>
             <section className='Main__containerVehicles'>
-                { vehicles ? 
-                vehicles.map((vehicle=> <VehicleCard key={vehicle._id} 
-                                        props={{vehicle}}/> )) : 
-                "Cargando..." }
-
-                <Page props={{ page , filterVehicles }} />
+                { (vehicles && vehicles.length > 0) ? 
+                <>
+                    {   
+                    vehicles.map((vehicle=> <VehicleCard key={vehicle._id} 
+                        props={{vehicle}}/> )) 
+                    }        
+                    <Page props={{ page , filterVehicles }} />
+                </> :
+                <div className='ErrorFindVehicles'>
+                    <span className='ErrorFindVehicles__span'>
+                        No existe ningun vehiculo con las caracteristicas especificadas!! <br />
+                        Por favor vuelve a buscar
+                    </span> <br />
+                    <a className='ErrorFindVehicles__link' href='/'>
+                        <MdRestartAlt/> Refrescar
+                    </a>
+                </div>
+                }
                     
             </section>
             

@@ -3,7 +3,7 @@ import { getVehicle , soldVehicle } from "../../services"
 
 //---- Dependencies
 import { useState, useEffect } from "react"
-import { Link } from "react-router-dom"
+import { Link, useParams } from "react-router-dom"
 import { FaAngleLeft, FaAngleRight, FaTimesCircle, FaTimes, 
         FaPen, FaTrashAlt, FaRegEdit  } from 'react-icons/fa'
 
@@ -11,9 +11,9 @@ import { FaAngleLeft, FaAngleRight, FaTimesCircle, FaTimes,
 // newMessage
 
 
-export default function VehicleBox({ props }){
+export function VehicleBox(){
 
-    const { id } = props
+    const { id } = useParams()
     const [ vehicle , setVehicle ] = useState(null)
     const [ slider, setSlider ] = useState([])
     const [ imageNum, setImageNum ] = useState(0)
@@ -105,6 +105,10 @@ export default function VehicleBox({ props }){
                         <span className="VehicleBox__mainData">Transmision: <b>{vehicle.transmission}</b></span>
                         <span className="VehicleBox__mainData">Color: <b>{vehicle.color}</b></span>
                         <span className="VehicleBox__mainData">Dueño: <b>{vehicle.owner}</b></span>
+                        <span className="VehicleBox__mainData">Traccion: <b>{vehicle.traction || "Normal"}</b></span>
+                        <span className="VehicleBox__mainData">
+                            Disponible: <b>{vehicle.available ? "Si" : "No"}</b>
+                            </span>
                     </div>
                     <h3 className='VehicleBox__h3'>Caracteristicas</h3>
                     {

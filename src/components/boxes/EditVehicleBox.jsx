@@ -1,7 +1,8 @@
 //------- Assets
 import { MdAdd } from 'react-icons/md'
 
-function VehicleForm() {
+
+export function EditVehicleBox() {
 
   function inputHandler(input){
     const label = input.previousElementSibling
@@ -106,4 +107,4 @@ function VehicleForm() {
   )
 }
 
-export default VehicleForm
+

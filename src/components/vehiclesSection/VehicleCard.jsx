@@ -1,9 +1,9 @@
 import { Link } from "react-router-dom";
 
-import { FaBan , FaWindowClose } from 'react-icons/fa'
+import { FaWindowClose } from 'react-icons/fa'
 // hacer las cartas de vehiculos disponibles y no disponibles
 
-export default function VehicleCard({ props }){
+export function VehicleCard({ props }){
 
     const { vehicle } = props
 

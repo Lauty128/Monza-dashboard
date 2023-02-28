@@ -1,44 +1,29 @@
 //---- Dependencies
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { useState } from 'react'
-
-//---- Assets
-import logo from './assets/logo.jpg';
-
-//----- Context
-import { VehiclesContextProvider } from './context/vehicles.context';
 
 //---- Components
-import VehicleForm from './components/VehicleForm'
-import VehiclesSection from './components/vehiclesSection/VehiclesSection';
-import Filters from './components/Filters'
-import ClientForm from './components/clients/clientForm';
-import Boxes_Layout from './components/boxes/Layout';
+import { NewVehicleBox } from "./components/boxes"
+import { Boxes_Layout } from './components/boxes';
+import MainLayout from './components/Layout';
+import { VehicleBox } from './components/boxes'
 
 
 function App() {
   
-
   return (
     <>
 
       <BrowserRouter>
-
-      <header className='Header'>
-        <img src={logo} alt="" className='Header__image'/>    
-        <h1 className='Header__h1'>DASHBOARD</h1>
-      </header>
-      
-      <main className='Main'>
-        <VehiclesContextProvider>
-          <Filters />
-          <VehiclesSection />
-        </VehiclesContextProvider>
-      </main>
-
         <Routes>
-          <Route path='/' element={ <div></div> } />
-          <Route path='/vehicle/:id' element={ <Boxes_Layout /> } />
+          <Route path='/' element={<MainLayout />} >
+            
+            <Route path='vehicle' element={<Boxes_Layout />}>
+              <Route path=':id' element={<VehicleBox />}/>
+              <Route path='edit/:id' element={<VehicleBox />}/>
+              <Route path='new' element={<NewVehicleBox />}/>
+            </Route>
+            
+          </Route>
         </Routes>
       </BrowserRouter>
 

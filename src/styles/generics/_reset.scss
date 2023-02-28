@@ -77,7 +77,22 @@ button:focus-visible {
   }
 }
 
-/*--- Delete aroows of the number-type inputs*/
+/*------- Delete aroows of the number-type inputs*/
 input[type=number]::-webkit-inner-spin-button, 
 input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none;  margin: 0 }
   
+
+/*------- Modify scroll bar   */
+div::-webkit-scrollbar {
+  width: 12px;               /* width of the entire scrollbar */
+}
+
+div::-webkit-scrollbar-track {
+  background: #4d4d4d;        /* color of the tracking area */
+}
+
+div::-webkit-scrollbar-thumb {
+  background-color: rgb(109, 109, 109);    /* color of the scroll thumb */
+  border-radius: 20px;       /* roundness of the scroll thumb */
+  border: 3px solid #4d4d4d  /* creates padding around scroll thumb */
+}
