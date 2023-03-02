@@ -1,18 +1,16 @@
+//----- Components
 import { Link } from "react-router-dom";
 
+//----- Assets
 import { FaWindowClose } from 'react-icons/fa'
-// hacer las cartas de vehiculos disponibles y no disponibles
+
 
 export function VehicleCard({ props }){
 
+    //----- Props
     const { vehicle } = props
 
-    function animationBox(){
-        setTimeout(()=>{
-            document.querySelector(".VehicleBox").classList.add("VehicleBox--active")
-        }, 10)
-    }
-
+    //----- JSX return
     return(
         <div className='Vehicle'>
             <div className='Vehicle__imageContainer'>
@@ -39,7 +37,7 @@ export function VehicleCard({ props }){
                 <span className='Vehicle__mark' >{ vehicle.mark }</span>
             </div>
             <h3 className='Vehicle__name' id={vehicle._id}>
-                <Link to={`vehicle/${vehicle._id}`} onClick={()=>{ animationBox() }}>
+                <Link to={`vehicle/${vehicle._id}`}>
                     { vehicle.version }
                 </Link>
             </h3>

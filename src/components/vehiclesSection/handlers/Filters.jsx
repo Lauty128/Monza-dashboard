@@ -10,8 +10,10 @@ import { vehiclesContext } from "../../../context/vehicles.context";
 
 export function Filters(props){
 
+    //----- Hooks
     const { filters, setFilters, setPage, filterVehicles } = useContext(vehiclesContext)
     
+    //----- Functions
     async function submitHandler(e){
         e.preventDefault()
         setPage(1)
@@ -20,7 +22,6 @@ export function Filters(props){
 
     async function resettHandler(e){
         e.preventDefault()
-        //setFilters({})  --  setPage(1)  --  filterVehicles()
         window.location.href = window.location.href
         // refresh the navigator
     }
@@ -43,9 +44,10 @@ export function Filters(props){
                 document.getElementById(element).checked = false
             }
         })
-        //if(target.checked === false) setFilters({ ...filters, type:undefined })
     }
 
+
+    //----- JSX return
     return(
         <form className='FiltersContainer'>
 
@@ -106,6 +108,7 @@ export function Filters(props){
 
             <input type="submit" value="FILTRAR" className='FiltersContainer__submitFilters'
             onClick={e=> submitHandler(e)}/>
+            
             {
                 filters != {} ?
                 <button className='FiltersContainer__restartFilters' onClick={e=> resettHandler(e)}>

@@ -1,9 +1,13 @@
+//---- Services
+import { getVehicle } from "../../services"
+
 //------- Assets
 import { MdAdd } from 'react-icons/md'
 
 
 export function EditVehicleBox() {
 
+  //------- Functions
   function inputHandler(input){
     const label = input.previousElementSibling
 
@@ -19,6 +23,8 @@ export function EditVehicleBox() {
     }
   }
 
+
+  //------- JSX return
   return (
     <form action={`${import.meta.env.VITE_HOST_API}`} method='POST' className='UploadForm'
     encType="multipart/form-data">

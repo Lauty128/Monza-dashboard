@@ -4,13 +4,17 @@ import { FaAngleRight, FaAngleLeft } from 'react-icons/fa'
 
 export function Page({ props }){
 
+    //----- Props
     const { page , filterVehicles } = props
 
+    //----- Functions
     async function handlerPage(num){
         const newPage = page.page + num
         filterVehicles(newPage)
     }
 
+
+    //----- JSX return
     return(
         <div className="HandlerPages">
             { page.hasPrevPage ? 

@@ -1,8 +1,8 @@
 //----- Dependencies
     import axios from 'axios';
 
-export async function getVehicles(){
-    const data = await axios(`${import.meta.env.VITE_HOST_API}?page=${page}`)
+export async function getVehicles(page = 1, filters = ""){
+    const data = await axios(`${import.meta.env.VITE_HOST_API}?page=${page}${filters}`)
     return data
 }
 

@@ -5,7 +5,6 @@
 //----- Components
     import { VehicleCard } from './VehicleCard'
     import { Page } from './handlers';
-    import { Link } from 'react-router-dom';
 
 //----- Assets
 import { MdRestartAlt } from 'react-icons/md'
@@ -13,10 +12,13 @@ import { MdRestartAlt } from 'react-icons/md'
 
 export function VehiclesSection(props){
 
+    //----- Hooks
     const { vehicles, page, filterVehicles } = useContext(vehiclesContext)
     
     useEffect(()=>{ filterVehicles() }, []) // Load the vehicles when the page loads
 
+
+    //----- JSX return
     return(
         <>
             <section className='Main__containerVehicles'>

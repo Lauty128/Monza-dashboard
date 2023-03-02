@@ -2,7 +2,7 @@
 import { createContext, useState } from "react";
 
 //----- Services
-import { getFiltersVehicles } from "../services/getVehicles";
+import { getVehicles } from "../services";
 
 //----- Components
 import filtersHandler from '../utils/filters'
@@ -18,7 +18,7 @@ export function VehiclesContextProvider({ children }){
 
     async function filterVehicles(newPage = 1){
         const filtersString = filtersHandler(filters)
-        const response = await getFiltersVehicles(newPage, filtersString)
+        const response = await getVehicles(newPage, filtersString)
 
         if(response.status === 200){
             setVehicles(response.data.docs)

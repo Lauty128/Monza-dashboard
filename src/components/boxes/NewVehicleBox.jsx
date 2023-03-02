@@ -1,12 +1,33 @@
+//------- Dependencies
+import { useState } from 'react';
+
 //------- Assets
-import { FaPlusCircle, FaTimes } from 'react-icons/fa'
+import { FaPlusCircle, FaTimes } from 'react-icons/fa';
 
 //------- Components
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom';
+
+//------- Components
+import { newMessage } from '../../utils/messageBox'
+
+//------- Services
+import { newVehicle } from '../../services';
 
 
 export function NewVehicleBox() {
 
+  //------- Box animation
+  setTimeout(()=>{
+      document.querySelector(".UploadForm").classList.add("UploadForm--active")
+  }, 30)
+
+  //-------- Variables
+  const defautlValues = { mark:'', version:'', engine:'', fuel:'', model:'', image:'', images:'', owner:'', price:'', type:'', traction:'', transmission:'', color:'', km:''}
+  
+  //------- Hooks
+  const [ values, setValues ] = useState(defautlValues)
+
+  //------- Functions
   function inputHandler(input){
     const label = input.previousElementSibling
 
@@ -22,11 +43,28 @@ export function NewVehicleBox() {
     }
   }
 
+  async function handlerForm(e){
+    e.preventDefault()
+    const body = new FormData(e.target)
+    const response = await newVehicle(body)
+    const data = response.json()
+    
+    const { message , type } = data
+
+    newMessage({ message, type })
+    e.target.reset()
+    document.querySelectorAll(".UploadForm__label").forEach(label=>{
+      label.classList.remove("UploadForm__label--active")
+    })
+  }
+
+
+  //------- JSX return
   return (
     <div className='UploadForm'>
-      <Link to='/' className="VehicleBox__exitButton"><FaTimes /></Link>
-      <form action={`${import.meta.env.VITE_HOST_API}`} method='POST' className='UploadForm__form'
-      encType="multipart/form-data">
+      <Link to='/' className="VehicleBox__exitButton"> <FaTimes /> </Link>
+      <form className='UploadForm__form' action={`${import.meta.env.VITE_HOST_API}`} method='POST'
+      encType="multipart/form-data" onSubmit={e=> handlerForm(e)}>
       
         <div className='UploadForm__inputImageContainer'>
           <label className='UploadForm__labelImage' htmlFor="input-image"><FaPlusCircle/> Add</label>
@@ -37,7 +75,7 @@ export function NewVehicleBox() {
         <div className='UploadForm__inputImagesContainer'>
           {/* <label className={styles.UploadForm__label} htmlFor="input-images">Images</label> */}
           <input id="input-images" type="file" name="images"
-          multiple accept="image/png, image/jpeg"/>
+          multiple accept="image/png, image/jpeg"/> 
         </div>
 
         <div className='UploadForm__inputContainer'>
@@ -49,7 +87,7 @@ export function NewVehicleBox() {
         <div className='UploadForm__inputContainer'>        
           <label className='UploadForm__label' htmlFor="input-version">Version</label>
           <input id="input-version" type="text" name="version" autoComplete='off'
-          onFocus={e=> inputHandler(e.target)} onBlur={e=> inputHandler(e.target)}/>
+          onFocus={e=> inputHandler(e.target)} onBlur={e=> inputHandler(e.target)} />
         </div>
 
         <div className='UploadForm__inputContainer'>
@@ -73,6 +111,12 @@ export function NewVehicleBox() {
         <div className='UploadForm__inputContainer'>
           <label className='UploadForm__label' htmlFor="input-transmission">Transmision</label>
           <input id="input-transmission" type="text" name="transmission" autoComplete='off'
+          onFocus={e=> inputHandler(e.target)} onBlur={e=> inputHandler(e.target)} />
+        </div> 
+        
+        <div className='UploadForm__inputContainer'>
+          <label className='UploadForm__label' htmlFor="input-traction">Traccion</label>
+          <input id="input-traction" type="text" name="traction"
           onFocus={e=> inputHandler(e.target)} onBlur={e=> inputHandler(e.target)} />
         </div>
 
@@ -100,7 +144,7 @@ export function NewVehicleBox() {
           onFocus={e=> inputHandler(e.target)} onBlur={e=> inputHandler(e.target)} />
         </div>
 
-        <div className='UploadForm__inputContainer UploadForm__inputPriceContainer'>
+        <div className='UploadForm__inputContainer'>
           {/* <label className={styles.UploadForm__obligatory}>$</label> */}
           <label className='UploadForm__label' htmlFor="input-price">Precio</label>
           <input id="input-price" type="number" name="price" autoComplete='off'

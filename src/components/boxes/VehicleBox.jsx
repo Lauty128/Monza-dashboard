@@ -4,20 +4,25 @@ import { getVehicle , soldVehicle } from "../../services"
 //---- Dependencies
 import { useState, useEffect } from "react"
 import { Link, useParams } from "react-router-dom"
-import { FaAngleLeft, FaAngleRight, FaTimesCircle, FaTimes, 
-        FaPen, FaTrashAlt, FaRegEdit  } from 'react-icons/fa'
+import { FaAngleLeft, FaAngleRight, FaTimesCircle, 
+        FaTimes, FaPen, FaTrashAlt } from 'react-icons/fa'
 
 //---- Utils
-// newMessage
+import { newMessage } from '../../utils/messageBox'
 
 
 export function VehicleBox(){
 
+    //------- Box animation
+    setTimeout(()=>{
+        document.querySelector(".VehicleBox").classList.add("VehicleBox--active")
+    }, 30)
+
+    //------- Hooks
     const { id } = useParams()
     const [ vehicle , setVehicle ] = useState(null)
     const [ slider, setSlider ] = useState([])
     const [ imageNum, setImageNum ] = useState(0)
-    //const [ widthSlider, setWidthSlider ] = useState(0)
 
     useEffect(()=>{
         (async()=>{
@@ -32,6 +37,7 @@ export function VehicleBox(){
         })()
     }, [])
 
+    //------- Functions
     function optionsSection(){
         return (
             !vehicle.sale_date ?
@@ -66,10 +72,13 @@ export function VehicleBox(){
             )
     }
 
-    async function buttonSold(id){
-        const data = await soldVehicle(id)
 
-        console.log(data);
+    async function buttonSold(id){
+        const response = await soldVehicle(id)
+        const data = response.data;
+
+        const type = data.err ? "ERROR" : "OK";
+        newMessage({ type , message })
     }
 
     function handlerSlider(num){
@@ -81,6 +90,8 @@ export function VehicleBox(){
         setImageNum(newImage)
     }
 
+
+    //------- JSX return
     return(
         <div className="VehicleBox">
             <Link to='/' className="VehicleBox__exitButton"><FaTimes /></Link>

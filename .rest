@@ -1,4 +1,19 @@
-GET http://localhost:3000
+# Basic request to get the all vehicles
+GET http://localhost:4000/api/vehicles
+ 
+
+# Add new vehicle
+POST http://localhost:4000/api/vehicles/:id 
+
+
+# Modify a vehicle
+PUT http://localhost:4000/api/vehicles/:id 
+# Vehicle sold
+PUT http://localhost:4000/api/vehicles/sold/:id 
+
+
+# clear a vehicle
+DELETE  http://localhost:4000/api/vehicles/:id 
 
 
 ###

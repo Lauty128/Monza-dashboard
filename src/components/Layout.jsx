@@ -10,29 +10,22 @@ import { VehiclesSection } from "./vehiclesSection"
 import { Link } from "react-router-dom";
 
 //---- Assets
-import logo from '../assets/logo.jpg';
-import { FaPlusCircle , FaFileExcel } from 'react-icons/fa'
+import { FaPlusCircle , FaFileExcel, FaInfoCircle } from 'react-icons/fa'
 
 
 export default function MainLayout(){
 
-  function animationBox(){
-    setTimeout(()=>{
-        document.querySelector(".UploadForm").classList.add("UploadForm--active")
-    }, 10)
-}
-
   return(
         <>
             <header className='Header'>
-              <img src={logo} alt="" className='Header__image'/>    
+              <img src='logo.jpg' alt="" className='Header__image'/>    
               <div className="Header__optionsContainer">
-              <Link className="Header__option" to={'/vehicle/new'} onClick={animationBox}>
-                <FaPlusCircle /> NUEVO
-              </Link>
-              <Link className="Header__option">
-                <FaFileExcel /> DESCARGAR
-              </Link>
+                <Link className="Header__option" to={'/vehicle/new'}>
+                  <FaPlusCircle /> NUEVO
+                </Link>
+                <Link className="Header__option">
+                  <FaFileExcel /> DESCARGAR
+                </Link>
               </div>
             </header>
       
@@ -44,6 +37,11 @@ export default function MainLayout(){
             </main>
 
             <Outlet /> {/* Here the boxes are loaded  */}
+
+            <div className="MessageBox">
+              <FaInfoCircle className="MessageBox__icon"/>
+              <p className="MessageBox__message">{/* Dynamic message */}</p>
+            </div>
         </>
     )
 }
