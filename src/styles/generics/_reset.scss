@@ -88,11 +88,11 @@ div::-webkit-scrollbar {
 }
 
 div::-webkit-scrollbar-track {
-  background: #4d4d4d;        /* color of the tracking area */
+  background: $background-color;        /* color of the tracking area */
 }
 
 div::-webkit-scrollbar-thumb {
-  background-color: rgb(109, 109, 109);    /* color of the scroll thumb */
+  background-color: $tertiary-color;    /* color of the scroll thumb */
   border-radius: 20px;       /* roundness of the scroll thumb */
-  border: 3px solid #4d4d4d  /* creates padding around scroll thumb */
+  border: 3px solid $background-color  /* creates padding around scroll thumb */
 }

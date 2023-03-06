@@ -1,6 +1,3 @@
-//------- Dependencies
-import { useState } from 'react';
-
 //------- Assets
 import { FaPlusCircle, FaTimes } from 'react-icons/fa';
 
@@ -20,12 +17,6 @@ export function NewVehicleBox() {
   setTimeout(()=>{
       document.querySelector(".UploadForm").classList.add("UploadForm--active")
   }, 30)
-
-  //-------- Variables
-  const defautlValues = { mark:'', version:'', engine:'', fuel:'', model:'', image:'', images:'', owner:'', price:'', type:'', traction:'', transmission:'', color:'', km:''}
-  
-  //------- Hooks
-  const [ values, setValues ] = useState(defautlValues)
 
   //------- Functions
   function inputHandler(input){
@@ -47,7 +38,7 @@ export function NewVehicleBox() {
     e.preventDefault()
     const body = new FormData(e.target)
     const response = await newVehicle(body)
-    const data = response.json()
+    const data = await response.json()
     
     const { message , type } = data
 
@@ -62,9 +53,8 @@ export function NewVehicleBox() {
   //------- JSX return
   return (
     <div className='UploadForm'>
-      <Link to='/' className="VehicleBox__exitButton"> <FaTimes /> </Link>
-      <form className='UploadForm__form' action={`${import.meta.env.VITE_HOST_API}`} method='POST'
-      encType="multipart/form-data" onSubmit={e=> handlerForm(e)}>
+      <Link to='/' className="Component__exitButton"> <FaTimes /> </Link>
+      <form className='UploadForm__form' onSubmit={e=> handlerForm(e)}>
       
         <div className='UploadForm__inputImageContainer'>
           <label className='UploadForm__labelImage' htmlFor="input-image"><FaPlusCircle/> Add</label>
@@ -149,6 +139,13 @@ export function NewVehicleBox() {
           <label className='UploadForm__label' htmlFor="input-price">Precio</label>
           <input id="input-price" type="number" name="price" autoComplete='off'
           onFocus={e=> inputHandler(e.target)} onBlur={e=> inputHandler(e.target)} />
+        </div>
+
+        <div className='UploadForm__inputContainer UploadForm__inputExtraContainer'>
+            <label className='UploadForm__label UploadForm__label--textarea' htmlFor="input-price">Extra</label>
+            <textarea name="extra" id="input-extra" cols="30" rows="10" 
+            onFocus={e=> inputHandler(e.target)} onBlur={e=> inputHandler(e.target)}>
+            </textarea>
         </div>
 
         <input id="input-" type="submit" value="ENVIAR" className='UploadForm__submitButton' />

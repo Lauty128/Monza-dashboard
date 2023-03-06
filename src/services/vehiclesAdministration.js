@@ -11,8 +11,8 @@ export async function deleteVehicle(id){
     return data
 }
 
-export async function modifyVehicle(id){
-    const data = await axios.put(`${import.meta.env.VITE_HOST_API}/delete/${id}`)
+export async function modifyVehicle(id, body){
+    const data = await axios.put(`${import.meta.env.VITE_HOST_API}/${id}`, body)
     return data
 }
 

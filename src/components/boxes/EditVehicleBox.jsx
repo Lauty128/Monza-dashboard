@@ -1,115 +1,147 @@
+//---- Dependencies
+import { useParams, Link } from "react-router-dom"
+import { useState , useEffect } from "react"
+
 //---- Services
-import { getVehicle } from "../../services"
+import { getVehicle , modifyVehicle } from "../../services"
 
 //------- Assets
-import { MdAdd } from 'react-icons/md'
+import { FaPlusCircle, FaTimes } from 'react-icons/fa';
+
+//------- Utils
+import { newMessage } from '../../utils/messageBox'
 
 
 export function EditVehicleBox() {
 
+  //------- Paramas
+  const { id } = useParams()
+
+  //------- Hooks
+  const [ values , setValues ] = useState({})
+  const [ vehicle , setVehicle ] = useState(null)
+
+  useEffect(()=>{
+    (async()=>{
+      const data = await getVehicle(id)
+      if(data.status === 200){
+        delete data.data.images
+        if(data.data.extra) data.data.extra = data.data.extra.join('\n')
+        setVehicle(data.data)
+      }
+    })()
+  },[])
+
   //------- Functions
-  function inputHandler(input){
-    const label = input.previousElementSibling
+  function inputChange(input){
+    const { name , value } = input
 
-    if(!label.classList.contains("uploadForm__label--active")){
-      //if the "label" not have the class:{styles["label--active"]}, it is added
-      label.classList.add("uploadForm__label--active")
-      return
-    }
-
-    if(input.value.length === 0){
-      //if blur is true and the input has no content then it remove the class {styles["label--active"]}
-      label.classList.remove("uploadForm__label--active")
-    }
+    setVehicle({ ...vehicle , [name]:value });
+    setValues({ ...values , [name]:value });
   }
 
+  async function submitHandler(e){
+    e.preventDefault()
+    const response = await modifyVehicle(id, values)
+    let type = "ERROR" 
+
+    if(response.statusText === "OK"){
+      e.target.reset()
+      type = "OK" 
+    }
+    newMessage({ type , message:response.data.msg });
+  }
 
   //------- JSX return
   return (
-    <form action={`${import.meta.env.VITE_HOST_API}`} method='POST' className='UploadForm'
-    encType="multipart/form-data">
-      
-      <div className='UploadForm__inputImageContainer'>
-        <label className='UploadForm__labelImage' htmlFor="input-image"><MdAdd/> Add</label>
-        <input id="input-image" type="file"
-        name="image" accept="image/png, image/jpeg" />
+    <div className="UploadForm UploadForm--active">
+      <Link to='/' className="Component__exitButton"> <FaTimes /> </Link>
+      <div className="UploadForm__div--edit">
+        <img src={vehicle !== null ? vehicle.image : ''} className="UploadForm__image--edit" />
+        <h2 className="UploadForm__h2--edit">{ vehicle ? vehicle.mark + " " + vehicle.version : "" }</h2>
       </div>
+      <form className='UploadForm__form UploadForm__form--edit' onSubmit={e=> submitHandler(e) }>
+        {
+          vehicle !== null ?
+          <>
+            <div className='UploadForm__inputContainer'>
+              <label className='UploadForm__label UploadForm__label--active' htmlFor="input-mark">Marca</label>
+              <input id="input-mark" type="text" name="mark" autoComplete='off' value={vehicle.mark}
+              onChange={e=> inputChange(e.target)} />
+            </div>
 
-      <div className='UploadForm__inputImagesContainer'>
-        {/* <label className={styles.UploadForm__label} htmlFor="input-images">Images</label> */}
-        <input id="input-images" type="file" name="images"
-        multiple accept="image/png, image/jpeg"/>
-      </div>
+            <div className='UploadForm__inputContainer'>        
+              <label className='UploadForm__label UploadForm__label--active' htmlFor="input-version">Version</label>
+              <input id="input-version" type="text" name="version" autoComplete='off' value={vehicle.version}
+              onChange={e=> inputChange(e.target)} />
+            </div>
 
-      <div className='UploadForm__inputContainer'>
-        <label className='UploadForm__label' htmlFor="input-mark">Mark</label>
-        <input id="input-mark" type="text" name="mark" autoComplete='off'
-        onFocus={e=> inputHandler(e.target)} onBlur={e=> inputHandler(e.target)} />
-      </div>
+            <div className='UploadForm__inputContainer'>
+              <label className='UploadForm__label UploadForm__label--active' htmlFor="input-engine">Motor</label>
+              <input id="input-engine" type="text" name="engine" autoComplete='off' value={vehicle.engine}
+              onChange={e=> inputChange(e.target)} />
+            </div>
 
-      <div className='UploadForm__inputContainer'>        
-        <label className='UploadForm__label' htmlFor="input-version">Version</label>
-        <input id="input-version" type="text" name="version" autoComplete='off'
-        onFocus={e=> inputHandler(e.target)} onBlur={e=> inputHandler(e.target)}/>
-      </div>
+            <div className='UploadForm__inputContainer'>
+              <label className='UploadForm__label UploadForm__label--active' htmlFor="input-fuel">Combustible</label>
+              <input id="input-fuel" type="text" name="fuel" autoComplete='off' value={vehicle.fuel}
+              onChange={e=> inputChange(e.target)} />
+            </div>
 
-      <div className='UploadForm__inputContainer'>
-        <label className='UploadForm__label' htmlFor="input-engine">Engine</label>
-        <input id="input-engine" type="text" name="engine" autoComplete='off'
-        onFocus={e=> inputHandler(e.target)} onBlur={e=> inputHandler(e.target)} />
-      </div>
+            <div className='UploadForm__inputContainer'>
+              <label className='UploadForm__label UploadForm__label--active' htmlFor="input-transmission">Transmision</label>
+              <input id="input-transmission" type="text" name="transmission" autoComplete='off' value={vehicle.transmission}
+              onChange={e=> inputChange(e.target)} />
+            </div>
 
-      <div className='UploadForm__inputContainer'>
-        <label className='UploadForm__label' htmlFor="input-fuel">Fuel</label>
-        <input id="input-fuel" type="text" name="fuel" autoComplete='off'
-        onFocus={e=> inputHandler(e.target)} onBlur={e=> inputHandler(e.target)} />
-      </div>
+            <div className='UploadForm__inputContainer'>
+              <label className='UploadForm__label UploadForm__label--active' htmlFor="input-color">Color</label>
+              <input id="input-color" type="text" name="color" autoComplete='off' value={vehicle.color}
+              onChange={e=> inputChange(e.target)} />
+            </div>
 
-      <div className='UploadForm__inputContainer'>
-        <label className='UploadForm__label' htmlFor="input-type">Type</label>
-        <input id="input-type" type="text" name="type" autoComplete='off'
-        onFocus={e=> inputHandler(e.target)} onBlur={e=> inputHandler(e.target)} />
-      </div>
+            <div className='UploadForm__inputContainer'>
+              <label className='UploadForm__label UploadForm__label--active' htmlFor="input-model">Modelo</label>
+              <input id="input-model" type="number" name="model" autoComplete='off' value={vehicle.model}
+              onChange={e=> inputChange(e.target)} />
+            </div>
 
-      <div className='UploadForm__inputContainer'>
-        <label className='UploadForm__label' htmlFor="input-transmission">Transmission</label>
-        <input id="input-transmission" type="text" name="transmission" autoComplete='off'
-        onFocus={e=> inputHandler(e.target)} onBlur={e=> inputHandler(e.target)} />
-      </div>
+            <div className='UploadForm__inputContainer'>
+              <label className='UploadForm__label UploadForm__label--active' htmlFor="input-owner">Propietario</label>
+              <input id="input-owner" type="text" name="owner" autoComplete='off' value={vehicle.owner}
+              onChange={e=> inputChange(e.target)} />
+            </div>
 
-      <div className='UploadForm__inputContainer'>
-        <label className='UploadForm__label' htmlFor="input-color">Color</label>
-        <input id="input-color" type="text" name="color" autoComplete='off'
-        onFocus={e=> inputHandler(e.target)} onBlur={e=> inputHandler(e.target)} />
-      </div>
+            <div className='UploadForm__inputContainer'>
+              <label className='UploadForm__label UploadForm__label--active' htmlFor="input-km">Kilometraje</label>
+              <input id="input-km" type="number" name="km" autoComplete='off' value={vehicle.km}
+              onChange={e=> inputChange(e.target)} />
+            </div>
 
-      <div className='UploadForm__inputContainer'>
-        <label className='UploadForm__label' htmlFor="input-model">Model</label>
-        <input id="input-model" type="number" name="model" autoComplete='off'
-        onFocus={e=> inputHandler(e.target)} onBlur={e=> inputHandler(e.target)} />
-      </div>
+            <div className='UploadForm__inputContainer'>
+              <label className='UploadForm__label UploadForm__label--active' htmlFor="input-price">Precio</label>
+              <input id="input-price" type="number" name="price" autoComplete='off' value={vehicle.price}
+              onChange={e=> inputChange(e.target)} />
+            </div>
 
-      <div className='UploadForm__inputContainer'>
-        <label className='UploadForm__label' htmlFor="input-owner">Owner</label>
-        <input id="input-owner" type="text" name="owner" autoComplete='off'
-        onFocus={e=> inputHandler(e.target)} onBlur={e=> inputHandler(e.target)} />
-      </div>
+            <div className='UploadForm__inputContainer'>
+            <label className='UploadForm__label UploadForm__label--active' htmlFor="input-price">Oferta</label>
+              <input id="input-offer_price" type="number" name="offer_price" autoComplete='off' value={vehicle.offer_price || ''} 
+              onChange={e=> inputChange(e.target)} />
+            </div>
 
-      <div className='UploadForm__inputContainer'>
-        <label className='UploadForm__label' htmlFor="input-km">km</label>
-        <input id="input-km" type="number" name="km" autoComplete='off'
-        onFocus={e=> inputHandler(e.target)} onBlur={e=> inputHandler(e.target)} />
-      </div>
-
-      <div className='UploadForm__inputContainer UploadForm__inputPriceContainer'>
-        {/* <label className={styles.UploadForm__obligatory}>$</label> */}
-        <label className='UploadForm__label' htmlFor="input-price">Price</label>
-        <input id="input-price" type="number" name="price" autoComplete='off'
-        onFocus={e=> inputHandler(e.target)} onBlur={e=> inputHandler(e.target)} />
-      </div>
-
-      <input id="input-" type="submit" value="ENVIAR" className='UploadForm__submitButton' />
-    </form>
+            <div className='UploadForm__inputContainer UploadForm__inputExtraContainer'>
+              <label className='UploadForm__label UploadForm__label--textarea UploadForm__label--active' htmlFor="input-price">Extra</label>
+              <textarea name="extra" id="input-extra" cols="30" rows="10" 
+              onChange={e=> inputChange(e.target)} value={vehicle.extra}>
+              </textarea>
+            </div>
+          </> :
+          ""
+        }
+        <input id="input-" type="submit" value="ENVIAR" className='UploadForm__submitButton'/>
+      </form>
+    </div>
   )
 }
 

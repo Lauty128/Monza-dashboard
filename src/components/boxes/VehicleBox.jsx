@@ -3,9 +3,11 @@ import { getVehicle , soldVehicle } from "../../services"
 
 //---- Dependencies
 import { useState, useEffect } from "react"
+import {AdvancedImage, placeholder} from '@cloudinary/react';
 import { Link, useParams } from "react-router-dom"
 import { FaAngleLeft, FaAngleRight, FaTimesCircle, 
-        FaTimes, FaPen, FaTrashAlt } from 'react-icons/fa'
+        FaTimes, FaPen, FaTrashAlt, FaRegCheckCircle,
+        FaDownload } from 'react-icons/fa'
 
 //---- Utils
 import { newMessage } from '../../utils/messageBox'
@@ -94,10 +96,13 @@ export function VehicleBox(){
     //------- JSX return
     return(
         <div className="VehicleBox">
-            <Link to='/' className="VehicleBox__exitButton"><FaTimes /></Link>
+            <Link to='/' className="Component__exitButton"><FaTimes /></Link>
             <div className="VehicleBox__imagesContainer">
                 <div className="VehicleBox__image">
-                    <img src={slider[imageNum]} placeholder="blur" />
+                    {/* <a href={slider[imageNum]} download className="VehicleBox__downloadImage">
+                        <FaDownload />
+                    </a> */}
+                    <img src={slider[imageNum]} /> 
                 </div>
                 <FaAngleLeft className="VehicleBox__arrow VehicleBox__arrow--left"
                     onClick={()=>{ handlerSlider(-1) }} />
@@ -123,10 +128,13 @@ export function VehicleBox(){
                     </div>
                     <h3 className='VehicleBox__h3'>Caracteristicas</h3>
                     {
-                        (vehicle.extra.lenght > 0) ?
+                        (vehicle.extra && vehicle.extra.length > 0) ?
                         <div className="VehicleBox__extraDataContainer">
-                            {vehicle.extra.map(extra=>(
-                                <span className="VehicleBox__extraData">{ extra }</span>   
+                            {vehicle.extra.map((extra, index)=>(
+                                <div className="VehicleBox__extraData"  key={index}>
+                                    <FaRegCheckCircle />
+                                    <span>{ extra }</span>   
+                                </div>
                             ))}
                         </div> :
                         <span className="VehicleBox__extraData--error"><FaTimesCircle /> Sin datos extra</span>

@@ -18,3 +18,22 @@
     &__icon{ font-size: 3em; color: #000 }
     &__message{ font-size: .9em; color: #000 }
 }
+
+.ErrorFindVehicles{
+    margin-top: 5em;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    &__span{
+        text-align: center;
+        font-size: 1.4em;
+    }
+    &__link{
+        border: .03em solid $primary-color;
+        color: $primary-color;
+        padding: .5em;
+
+        & svg{ vertical-align: text-top }
+    }
+}

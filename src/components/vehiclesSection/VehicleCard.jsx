@@ -18,7 +18,7 @@ export function VehicleCard({ props }){
                 <span className='Vehicle__model'>
                     { vehicle.model }
                 </span>
-                {vehicle.traction ?
+                {(vehicle.traction && vehicle.traction !== 'Normal') ?
                     <span className='Vehicle__type'>
                         { vehicle.traction }
                     </span>
