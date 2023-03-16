@@ -1,5 +1,5 @@
 //----- Dependencies
-import { createContext, useState } from "react";
+import { createContext, useState, useContext } from "react";
 
 //----- Services
 import { getVehicles } from "../services";
@@ -22,7 +22,7 @@ export function VehiclesContextProvider({ children }){
         const filtersString = filtersHandler(filters)
         const response = await getVehicles(newPage, filtersString)
 
-        if(response.status === 200){
+        if(response.status === 200 || response.status === 204){
             setVehicles(response.data.docs)
             delete response.data.docs
             setPage(response.data)
@@ -41,3 +41,5 @@ export function VehiclesContextProvider({ children }){
         </vehiclesContext.Provider>
     )
 }
+
+export const VehicleContext = () => useContext(vehiclesContext) 

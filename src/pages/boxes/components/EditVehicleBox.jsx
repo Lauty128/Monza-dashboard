@@ -1,15 +1,13 @@
 //---- Dependencies
-import { useParams, Link } from "react-router-dom"
+import { useParams } from "react-router-dom"
 import { useState , useEffect } from "react"
 
 //---- Services
-import { getVehicle , modifyVehicle } from "../../services"
-
-//------- Assets
-import { FaPlusCircle, FaTimes } from 'react-icons/fa';
+import { modifyVehicle } from "../services"
+import { getVehicle } from "@/services";
 
 //------- Utils
-import { newMessage } from '../../utils/messageBox'
+import { newMessage } from '@/utils/box-effects'
 
 
 export function EditVehicleBox() {
@@ -42,6 +40,9 @@ export function EditVehicleBox() {
 
   async function submitHandler(e){
     e.preventDefault()
+    const boxLoading = document.querySelector(".ContainerBoxes__loadingContainer")
+    boxLoading.classList.add("ContainerBoxes__loadingContainer--active")
+
     const response = await modifyVehicle(id, values)
     let type = "ERROR" 
 
@@ -49,13 +50,14 @@ export function EditVehicleBox() {
       e.target.reset()
       type = "OK" 
     }
+    
+    boxLoading.classList.remove("ContainerBoxes__loadingContainer--active")
     newMessage({ type , message:response.data.msg });
   }
 
   //------- JSX return
   return (
-    <div className="UploadForm UploadForm--active">
-      <Link to='/' className="Component__exitButton"> <FaTimes /> </Link>
+    <>
       <div className="UploadForm__div--edit">
         <img src={vehicle !== null ? vehicle.image : ''} className="UploadForm__image--edit" />
         <h2 className="UploadForm__h2--edit">{ vehicle ? vehicle.mark + " " + vehicle.version : "" }</h2>
@@ -141,7 +143,7 @@ export function EditVehicleBox() {
         }
         <input id="input-" type="submit" value="ENVIAR" className='UploadForm__submitButton'/>
       </form>
-    </div>
+    </>
   )
 }
 

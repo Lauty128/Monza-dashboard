@@ -1,22 +1,17 @@
 //------- Assets
-import { FaPlusCircle, FaTimes } from 'react-icons/fa';
+import { FaPlusCircle } from 'react-icons/fa';
 
 //------- Components
-import { Link } from 'react-router-dom';
-
-//------- Components
-import { newMessage } from '../../utils/messageBox'
+import { newMessage } from '@/utils/box-effects'
 
 //------- Services
-import { newVehicle } from '../../services';
+import { newVehicle } from '../services';
+
+//------- Data
+import { clientsData } from '../data/clients';
 
 
 export function NewVehicleBox() {
-
-  //------- Box animation
-  setTimeout(()=>{
-      document.querySelector(".UploadForm").classList.add("UploadForm--active")
-  }, 30)
 
   //------- Functions
   function inputHandler(input){
@@ -34,15 +29,19 @@ export function NewVehicleBox() {
     }
   }
 
-  async function handlerForm(e){
+  async function submitHandler(e){
     e.preventDefault()
+    const boxLoading = document.querySelector(".ContainerBoxes__loadingContainer")
+    boxLoading.classList.add("ContainerBoxes__loadingContainer--active")
+
     const body = new FormData(e.target)
     const response = await newVehicle(body)
-    const data = await response.json()
-    
-    const { message , type } = data
 
-    newMessage({ message, type })
+    boxLoading.classList.remove("ContainerBoxes__loadingContainer--active")
+
+    const type = response.error ? "ERROR" : "OK"
+    newMessage({ message:response.msg, type })
+
     e.target.reset()
     document.querySelectorAll(".UploadForm__label").forEach(label=>{
       label.classList.remove("UploadForm__label--active")
@@ -52,9 +51,7 @@ export function NewVehicleBox() {
 
   //------- JSX return
   return (
-    <div className='UploadForm'>
-      <Link to='/' className="Component__exitButton"> <FaTimes /> </Link>
-      <form className='UploadForm__form' onSubmit={e=> handlerForm(e)}>
+      <form className='UploadForm__form' onSubmit={e=> submitHandler(e)}>
       
         <div className='UploadForm__inputImageContainer'>
           <label className='UploadForm__labelImage' htmlFor="input-image"><FaPlusCircle/> Add</label>
@@ -123,9 +120,14 @@ export function NewVehicleBox() {
         </div>
 
         <div className='UploadForm__inputContainer'>
-          <label className='UploadForm__label' htmlFor="input-owner">Dueño</label>
-          <input id="input-owner" type="text" name="owner" autoComplete='off'
-          onFocus={e=> inputHandler(e.target)} onBlur={e=> inputHandler(e.target)} />
+          <label className='UploadForm__label UploadForm__label--active' htmlFor="input-owner">Dueño</label>
+          <select name="owner" id="input-owner" >
+            {
+              clientsData.map(client=><option value={client}>{client}</option>)
+            }
+          </select>
+          {/* <input id="input-owner" type="text" name="owner" autoComplete='off'
+          onFocus={e=> inputHandler(e.target)} onBlur={e=> inputHandler(e.target)} /> */}
         </div>
 
         <div className='UploadForm__inputContainer'>
@@ -150,7 +152,6 @@ export function NewVehicleBox() {
 
         <input id="input-" type="submit" value="ENVIAR" className='UploadForm__submitButton' />
       </form>
-    </div>
   )
 }
 

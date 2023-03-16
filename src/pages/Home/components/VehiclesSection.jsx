@@ -1,10 +1,9 @@
 //---- Dependencies
-    import { useEffect, useContext } from 'react';
-    import { vehiclesContext } from '../../context/vehicles.context';
+    import { useEffect } from 'react';
+    import { VehicleContext } from '@/context/vehicles.context';
 
 //----- Components
-    import { VehicleCard } from './VehicleCard';
-    import { Page } from './handlers';
+    import { VehicleCard, Page } from './';
 
 //----- Assets
 import { MdRestartAlt } from 'react-icons/md';
@@ -13,9 +12,12 @@ import { MdRestartAlt } from 'react-icons/md';
 export function VehiclesSection(){
 
     //----- Hooks
-    const { vehicles, page, filterVehicles } = useContext(vehiclesContext)
+    const { vehicles, page, filterVehicles } = VehicleContext()
     
     useEffect(()=>{ filterVehicles() }, []) // Load the vehicles when the page loads
+    
+    //----- Variables
+    const arrayofthree = [1,2,3]
 
     //----- JSX return
     return(
@@ -28,6 +30,7 @@ export function VehiclesSection(){
                         vehicles.map((vehicle=> <VehicleCard key={vehicle._id} 
                             props={{vehicle}}/> )) 
                         }        
+                        { vehicles.length <= 3 ? arrayofthree.map(index=>(<div key={index}></div>) ) : '' }
                         <Page props={{ page , filterVehicles }} />
                     </> 
                     :

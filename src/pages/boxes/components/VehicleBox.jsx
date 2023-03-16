@@ -1,25 +1,19 @@
 //---- Services
-import { getVehicle , soldVehicle } from "../../services"
+import { soldVehicle } from "../services"
+import { getVehicle } from "../../../services"
 
 //---- Dependencies
 import { useState, useEffect } from "react"
-import {AdvancedImage, placeholder} from '@cloudinary/react';
+//import {AdvancedImage, placeholder} from '@cloudinary/react';
 import { Link, useParams } from "react-router-dom"
 import { FaAngleLeft, FaAngleRight, FaTimesCircle, 
-        FaTimes, FaPen, FaTrashAlt, FaRegCheckCircle,
-        FaDownload } from 'react-icons/fa'
+        FaPen, FaTrashAlt, FaRegCheckCircle,} from 'react-icons/fa'
 
 //---- Utils
-import { newMessage } from '../../utils/messageBox'
+import { newMessage } from '../../../utils/box-effects'
 
 
 export function VehicleBox(){
-
-    //------- Box animation
-    setTimeout(()=>{
-        document.querySelector(".VehicleBox").classList.add("VehicleBox--active")
-    }, 30)
-
     //------- Hooks
     const { id } = useParams()
     const [ vehicle , setVehicle ] = useState(null)
@@ -80,7 +74,7 @@ export function VehicleBox(){
         const data = response.data;
 
         const type = data.err ? "ERROR" : "OK";
-        newMessage({ type , message })
+        newMessage({ type , message: data.msg })
     }
 
     function handlerSlider(num){
@@ -95,8 +89,7 @@ export function VehicleBox(){
 
     //------- JSX return
     return(
-        <div className="VehicleBox">
-            <Link to='/' className="Component__exitButton"><FaTimes /></Link>
+        <>
             <div className="VehicleBox__imagesContainer">
                 <div className="VehicleBox__image">
                     {/* <a href={slider[imageNum]} download className="VehicleBox__downloadImage">
@@ -124,7 +117,10 @@ export function VehicleBox(){
                         <span className="VehicleBox__mainData">Traccion: <b>{vehicle.traction || "Normal"}</b></span>
                         <span className="VehicleBox__mainData">
                             Disponible: <b>{vehicle.available ? "Si" : "No"}</b>
-                            </span>
+                        </span>
+                        <span className="VehicleBox__mainData">Kilometraje:  
+                            <b>{vehicle.km ? ` ${vehicle.km.toLocaleString('es-AR')}` : 'Indefinido'}</b>
+                        </span>
                     </div>
                     <h3 className='VehicleBox__h3'>Caracteristicas</h3>
                     {
@@ -145,6 +141,6 @@ export function VehicleBox(){
                 </> :
                     ""
             }
-        </div>
+        </>
     )
 }

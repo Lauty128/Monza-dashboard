@@ -1,8 +1,5 @@
 //----- Dependencies
-import { vehiclesContext } from "../../../context/vehicles.context";
-
-//----- Hooks
-    import { useContext } from 'react'
+import { VehicleContext } from "@/context/vehicles.context";
 
 //----- Assets
     import { MdRestartAlt } from 'react-icons/md'
@@ -11,7 +8,7 @@ import { vehiclesContext } from "../../../context/vehicles.context";
 export function Filters(props){
 
     //----- Hooks
-    const { filters, setFilters, setPage, filterVehicles } = useContext(vehiclesContext)
+    const { filters, setFilters, setPage, filterVehicles } = VehicleContext()
     
     //----- Functions
     async function submitHandler(e){
@@ -22,6 +19,9 @@ export function Filters(props){
 
     async function resettHandler(e){
         e.preventDefault()
+        //setFilters({})
+        //setPage(1)
+        //filterVehicles()
         window.location.href = window.location.href
         // refresh the navigator
     }

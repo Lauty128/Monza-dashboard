@@ -2,18 +2,16 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 //---- Components
-import { NewVehicleBox,
-        Boxes_Layout,
-        VehicleBox,
-        EditVehicleBox } from "./components/boxes"
-import MainLayout from './components/Layout';
+import { NewVehicleBox, VehicleBox, EditVehicleBox } from "./pages/boxes/components"
+
+import Boxes_Layout from './pages/boxes/Layout';
+import MainLayout from './pages/Home/Layout';
 
 
 function App() {
   
   return (
     <>
-
       <BrowserRouter>
         <Routes>
           <Route path='/' element={<MainLayout />} >
@@ -27,9 +25,6 @@ function App() {
           </Route>
         </Routes>
       </BrowserRouter>
-
-      
-
     </>
     )
 }
