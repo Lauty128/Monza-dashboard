@@ -5,15 +5,14 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { NewVehicleBox,
         Boxes_Layout,
         VehicleBox,
-        EditVehicleBox } from "./components/boxes"
-import MainLayout from './components/Layout';
+        EditVehicleBox } from "./pages/boxes"
+import MainLayout from './pages/Home/Layout';
 
 
 function App() {
   
   return (
     <>
-
       <BrowserRouter>
         <Routes>
           <Route path='/' element={<MainLayout />} >
@@ -27,9 +26,6 @@ function App() {
           </Route>
         </Routes>
       </BrowserRouter>
-
-      
-
     </>
     )
 }

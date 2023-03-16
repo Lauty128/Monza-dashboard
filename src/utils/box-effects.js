@@ -9,3 +9,10 @@ export function newMessage({ type , message }){
         messageBox.classList.remove('MessageBox--active')
     }, 2000)
 }
+
+export function openBox(){
+    //------- Box animation
+    setTimeout(()=>{
+        document.querySelector(".ContainerBoxes__box").classList.add("ContainerBoxes__box--active")
+    }, 30)
+}

@@ -1,5 +1,5 @@
 //----- Dependencies
-import { vehiclesContext } from "../../../context/vehicles.context";
+import { vehiclesContext } from "@/context/vehicles.context";
 
 //----- Hooks
     import { useContext } from 'react'
@@ -22,6 +22,9 @@ export function Filters(props){
 
     async function resettHandler(e){
         e.preventDefault()
+        //setFilters({})
+        //setPage(1)
+        //filterVehicles()
         window.location.href = window.location.href
         // refresh the navigator
     }
