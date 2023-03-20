@@ -1,5 +1,5 @@
 //----- Dependencies
-import { createContext, useState, useContext } from "react";
+import { createContext, useState, useContext, useEffect } from "react";
 
 //----- Services
 import { getVehicles } from "../services";
@@ -18,24 +18,36 @@ export function VehiclesContextProvider({ children }){
     const [ filters , setFilters ] = useState({})
 
     //---- Functions
-    async function filterVehicles(newPage = 1){
-        const filtersString = filtersHandler(filters)
+    useEffect(()=>{
+        (async()=>{
+            const filtersString = (filters == {}) ? '' : filtersHandler(filters)
+            const response = await getVehicles(1, filtersString)
+            
+            changeHooks(response) 
+        })()
+    },[filters])
+
+    async function getNewPage(newPage){
+        const filtersString = (filters == {}) ? '' : filtersHandler(filters)
         const response = await getVehicles(newPage, filtersString)
 
+        changeHooks(response)
+    }
+
+    function changeHooks(response){
         if(response.status === 200 || response.status === 204){
             setVehicles(response.data.docs)
             delete response.data.docs
             setPage(response.data)
         }
-  }
+    }
 
     //---- return JSX
     return(
         <vehiclesContext.Provider value={{
-            vehicles, setVehicles,
             filters, setFilters,
-            page, setPage,
-            filterVehicles
+            page, setPage, getNewPage,
+            vehicles
         }}>
             { children }
         </vehiclesContext.Provider>

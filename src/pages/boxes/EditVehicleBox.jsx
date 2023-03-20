@@ -1,5 +1,5 @@
 //---- Dependencies
-import { useParams, Link } from "react-router-dom"
+import { useParams } from "react-router-dom"
 import { useState , useEffect } from "react"
 
 //---- Services
@@ -8,6 +8,9 @@ import { getVehicle } from "@/services";
 
 //------- Utils
 import { newMessage } from '@/utils/box-effects'
+
+//------- Data
+import { clientsData, typesData } from '@/data/form'
 
 
 export function EditVehicleBox() {
@@ -36,6 +39,10 @@ export function EditVehicleBox() {
 
     setVehicle({ ...vehicle , [name]:value });
     setValues({ ...values , [name]:value });
+  }
+
+  function selectHandler(target){
+    inputChange({ name:target.name , value:target.value })
   }
 
   async function submitHandler(e){
@@ -91,6 +98,17 @@ export function EditVehicleBox() {
             </div>
 
             <div className='UploadForm__inputContainer'>
+              <label className='UploadForm__label UploadForm__label--active' htmlFor="input-type">Tipo</label>
+              {/* <input id="input-type" type="text" name="type" autoComplete='off' value={vehicle.type} */}
+              {/* onChange={e=> inputChange(e.target)} /> */}
+              <select name="type" id="input-type" value={vehicle.type} onChange={(e)=> selectHandler(e.target)}>
+                { typesData.map((type,index)=>{
+                  return <option value={type} key={index}>{type}</option>
+                }) }
+              </select>
+            </div>
+
+            <div className='UploadForm__inputContainer'>
               <label className='UploadForm__label UploadForm__label--active' htmlFor="input-transmission">Transmision</label>
               <input id="input-transmission" type="text" name="transmission" autoComplete='off' value={vehicle.transmission}
               onChange={e=> inputChange(e.target)} />
@@ -110,8 +128,13 @@ export function EditVehicleBox() {
 
             <div className='UploadForm__inputContainer'>
               <label className='UploadForm__label UploadForm__label--active' htmlFor="input-owner">Propietario</label>
-              <input id="input-owner" type="text" name="owner" autoComplete='off' value={vehicle.owner}
-              onChange={e=> inputChange(e.target)} />
+              {/* <input id="input-owner" type="text" name="owner" autoComplete='off' value={vehicle.owner}
+              onChange={e=> inputChange(e.target)} /> */}
+              <select name="owner" id="input-owner" value={vehicle.owner} onChange={e=> selectHandler(e.target)}>
+              { clientsData.map((client,index)=>{
+                  return <option value={client} key={index}>{client}</option>
+                }) }
+              </select>
             </div>
 
             <div className='UploadForm__inputContainer'>

@@ -1,43 +1,50 @@
 //----- Dependencies
-import { vehiclesContext } from "@/context/vehicles.context";
+    import { vehiclesContext } from "@/context/vehicles.context";
 
 //----- Hooks
-    import { useContext } from 'react'
+    import { useContext, useRef, useState } from 'react'
 
 //----- Assets
     import { MdRestartAlt } from 'react-icons/md'
+
+//----- Data
+    import { clientsData } from "@/data/form";
 
 
 export function Filters(props){
 
     //----- Hooks
-    const { filters, setFilters, setPage, filterVehicles } = useContext(vehiclesContext)
+    const { setFilters } = useContext(vehiclesContext)
+    const [ localFilters, setLocalFilters ] = useState({})
+    const formRef = useRef(null)
     
     //----- Functions
     async function submitHandler(e){
         e.preventDefault()
-        setPage(1)
-        filterVehicles()
+        setFilters(localFilters)
     }
 
     async function resettHandler(e){
         e.preventDefault()
-        //setFilters({})
-        //setPage(1)
-        //filterVehicles()
-        window.location.href = window.location.href
-        // refresh the navigator
+        setLocalFilters({})
+        setFilters({})
+        // the second parameter indicates that the filters must be reset
+        
+        if(formRef.current !== null){
+            formRef.current.reset()
+            // refresh the form
+        }
     }
 
     function filtersChange(target){
         const { name , value , type } = target
         if(type === 'checkbox'){
-            if(!target.checked) return setFilters({ ...filters, [name]:undefined })
-            if(target.name !== 'sale_date') filtersCheckbox(target);
+            if(!target.checked) return setLocalFilters({ ...localFilters, [name]:undefined })
+            else filtersCheckbox(target);
         }
 
-        if(value === "") return setFilters({ ...filters, [name]:undefined })
-        setFilters({...filters, [name]:value})
+        if(value === "") return setLocalFilters({ ...localFilters, [name]:undefined })
+        setLocalFilters({...localFilters, [name]:value})
     }
 
     function filtersCheckbox(target){
@@ -52,7 +59,7 @@ export function Filters(props){
 
     //----- JSX return
     return(
-        <form className='FiltersContainer'>
+        <form className='FiltersContainer' ref={formRef}>
 
             <div>
                 <label htmlFor="sortOption">Ordenar por: </label>
@@ -80,12 +87,7 @@ export function Filters(props){
             <select name="owner" className='FiltersContainer__select' 
             onChange={e=> filtersChange(e.target)} >
                 <option value="">Dueño</option>
-                <option value="Sebastian del Soto">Sebastian del Soto</option>
-                <option value="Juan Silverii">Juan Silverii</option>
-                <option value="Sergio Castor">Sergio Castor</option>
-                <option value="Negro Machi">Negro Machi</option>
-                <option value="Hernan Gorostieta">Hernan Gorostieta</option>
-                <option value="Otros">Otros</option>
+                { clientsData.map((client,index)=> <option key={index} value={client}>{client}</option>) }
             </select>
 
             <div className="FiltersContainer__div">
@@ -104,21 +106,12 @@ export function Filters(props){
                 </div>
             </div>
 
-            <div className="FiltersContainer__checkboxContainer FiltersContainer__checkboxContainer--sold">
-                <input type="checkbox" name="sale_date" className="FiltersContainer__checkbox" value='yes' id="checkbox-sold" onChange={e=> filtersChange(e.target)} />
-                <label htmlFor="checkbox-sold">Vendido</label>
-            </div>
-
             <input type="submit" value="FILTRAR" className='FiltersContainer__submitFilters'
             onClick={e=> submitHandler(e)}/>
             
-            {
-                filters != {} ?
-                <button className='FiltersContainer__restartFilters' onClick={e=> resettHandler(e)}>
-                    <MdRestartAlt/> Restablecer
-                </button> :
-                    " "
-            }
+            <button className='FiltersContainer__restartFilters' onClick={e=> resettHandler(e)}>
+                <MdRestartAlt/> Restablecer
+            </button> 
 
         </form>
     )

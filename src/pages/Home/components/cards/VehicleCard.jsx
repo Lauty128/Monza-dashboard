@@ -23,9 +23,6 @@ export function VehicleCard({ props }){
                         { vehicle.traction }
                     </span>
                 : ""}
-                {!vehicle.available ?
-                    <FaWindowClose className="Vehicle__noAvailable" />
-                : ""}
             </div>
             <div className='Vehicle__info'>
                 <span className='Vehicle__price}' >

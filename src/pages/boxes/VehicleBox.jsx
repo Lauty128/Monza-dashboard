@@ -1,5 +1,5 @@
 //---- Services
-import { soldVehicle } from "./services"
+import { deleteVehicle } from "./services"
 import { getVehicle } from "../../services"
 
 //---- Dependencies
@@ -43,7 +43,7 @@ export function VehicleBox(){
                             <FaPen /> Editar
                         </Link>
                         <Link className="VehicleBox__option"
-                        onClick={()=> buttonSold(vehicle._id) }>
+                        onClick={()=> buttonDelete(vehicle._id) }>
                             <FaTrashAlt /> Eliminar
                         </Link>
                     </div>
@@ -69,8 +69,8 @@ export function VehicleBox(){
     }
 
 
-    async function buttonSold(id){
-        const response = await soldVehicle(id)
+    async function buttonDelete(id){
+        const response = await deleteVehicle(id)
         const data = response.data;
 
         const type = data.err ? "ERROR" : "OK";
@@ -121,6 +121,7 @@ export function VehicleBox(){
                         <span className="VehicleBox__mainData">Kilometraje:  
                             <b>{vehicle.km ? ` ${vehicle.km.toLocaleString('es-AR')}` : 'Indefinido'}</b>
                         </span>
+                        <span className="VehicleBox__mainData">Tipo: <b>{vehicle.type}</b></span>
                     </div>
                     <h3 className='VehicleBox__h3'>Caracteristicas</h3>
                     {

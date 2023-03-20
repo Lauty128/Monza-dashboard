@@ -2,13 +2,8 @@
 import axios from 'axios';
 
 
-export async function soldVehicle(id){
-    const data = await axios.put(`${import.meta.env.VITE_HOST_API}/sold/${id}`)
-    return data
-}
-
 export async function deleteVehicle(id){
-    const data = await axios.put(`${import.meta.env.VITE_HOST_API}/delete/${id}`)
+    const data = await axios.delete(`${import.meta.env.VITE_HOST_API}/${id}`)
     return data
 }
 

@@ -12,9 +12,9 @@ import { MdRestartAlt } from 'react-icons/md';
 export function VehiclesSection(){
 
     //----- Hooks
-    const { vehicles, page, filterVehicles } = VehicleContext()
+    const { vehicles, page, getNewPage } = VehicleContext()
     
-    useEffect(()=>{ filterVehicles() }, []) // Load the vehicles when the page loads
+    //useEffect(()=>{ filterVehicles() }, []) // Load the vehicles when the page loads
     
     //----- Variables
     const arrayofthree = [1,2,3]
@@ -31,7 +31,7 @@ export function VehiclesSection(){
                             props={{vehicle}}/> )) 
                         }        
                         { vehicles.length <= 3 ? arrayofthree.map(index=>(<div key={index}></div>) ) : '' }
-                        <Page props={{ page , filterVehicles }} />
+                        <Page props={{ page, getNewPage }} />
                     </> 
                     :
                     <div className='ErrorFindVehicles'>

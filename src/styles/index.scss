@@ -81,15 +81,6 @@
     }
     &__model{ top: -.5em }
     &__type{ top: 2.2em }
-   
-    &__noAvailable{
-        position: absolute;
-        color: #7e3636;
-        font-size: 2em;
-        left: -.1em;
-        top: -.3em;
-        background-color: $tertiary-color;
-    }
     
     &__info{ 
         @include flex(space-between); 
@@ -282,7 +273,7 @@
         color: $primary-color;
         padding: .5em;
 
-        &:nth-child(2){ margin-left: 2em; }
+        &:nth-child(2), &:nth-child(3){ margin-left: 1em; }
     }
     &__price{
         font-weight: 800;

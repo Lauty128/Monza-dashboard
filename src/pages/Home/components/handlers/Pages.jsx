@@ -1,18 +1,21 @@
 //---- Assets
 import { FaAngleRight, FaAngleLeft } from 'react-icons/fa'
 
+//---- Services
+import { getVehicles } from '@/services/vehicles.service'
 
 export function Page({ props }){
 
     //----- Props
-    const { page , filterVehicles } = props
+    const { page, getNewPage  } = props
 
     //----- Functions
-    async function handlerPage(num){
-        const newPage = page.page + num
-        filterVehicles(newPage)
-    }
+    
 
+    function handlerPage(num){
+        const newPage = page.page + num
+        getNewPage(newPage)
+    }
 
     //----- JSX return
     return(

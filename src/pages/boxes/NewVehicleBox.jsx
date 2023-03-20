@@ -8,7 +8,10 @@ import { newMessage } from '@/utils/box-effects'
 import { newVehicle } from './services';
 
 //------- Data
-import { clientsData } from './data/clients';
+import { clientsData } from '@/data/form';
+
+//------- Utils
+import { is_input_of_type_select } from './utils/controller.utils'
 
 
 export function NewVehicleBox() {
@@ -44,7 +47,10 @@ export function NewVehicleBox() {
 
     e.target.reset()
     document.querySelectorAll(".UploadForm__label").forEach(label=>{
-      label.classList.remove("UploadForm__label--active")
+      console.log(label.nextElementSibling.type);
+      if(!is_input_of_type_select(label.nextElementSibling.name)){
+        label.classList.remove("UploadForm__label--active")
+      }
     })
   }
 
@@ -90,9 +96,14 @@ export function NewVehicleBox() {
         </div>
 
         <div className='UploadForm__inputContainer'>
-          <label className='UploadForm__label' htmlFor="input-type">Tipo</label>
-          <input id="input-type" type="text" name="type" autoComplete='off'
-          onFocus={e=> inputHandler(e.target)} onBlur={e=> inputHandler(e.target)} />
+          <label className='UploadForm__label UploadForm__label--active' htmlFor="input-type">Tipo</label>
+          {/* <input id="input-type" type="text" name="type" autoComplete='off'
+          onFocus={e=> inputHandler(e.target)} onBlur={e=> inputHandler(e.target)} /> */}
+          <select name="type" id="input-type">
+            <option value="Auto">Auto</option>
+            <option value="Camioneta">Camioneta</option>
+            <option value="Utilitario">Utilitario</option>
+          </select>
         </div>
 
         <div className='UploadForm__inputContainer'>
@@ -123,7 +134,7 @@ export function NewVehicleBox() {
           <label className='UploadForm__label UploadForm__label--active' htmlFor="input-owner">Dueño</label>
           <select name="owner" id="input-owner" >
             {
-              clientsData.map(client=><option value={client}>{client}</option>)
+              clientsData.map((client,index)=><option key={index} value={client}>{client}</option>)
             }
           </select>
           {/* <input id="input-owner" type="text" name="owner" autoComplete='off'
