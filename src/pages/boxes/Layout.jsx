@@ -14,7 +14,7 @@ export function Boxes_Layout(){
     return(
         <div className='ContainerBoxes'>
             <div className="ContainerBoxes__box">
-                <Link to='/' className="Component__exitButton"> <FaTimes /> </Link>
+                <Link to='/' className="Component__exitButton" id="exit_of_box"><FaTimes /></Link>
                 <Outlet/>
             </div>
 

@@ -115,9 +115,6 @@ export function VehicleBox(){
                         <span className="VehicleBox__mainData">Color: <b>{vehicle.color}</b></span>
                         <span className="VehicleBox__mainData">Dueño: <b>{vehicle.owner}</b></span>
                         <span className="VehicleBox__mainData">Traccion: <b>{vehicle.traction || "Normal"}</b></span>
-                        <span className="VehicleBox__mainData">
-                            Disponible: <b>{vehicle.available ? "Si" : "No"}</b>
-                        </span>
                         <span className="VehicleBox__mainData">Kilometraje:  
                             <b>{vehicle.km ? ` ${vehicle.km.toLocaleString('es-AR')}` : 'Indefinido'}</b>
                         </span>

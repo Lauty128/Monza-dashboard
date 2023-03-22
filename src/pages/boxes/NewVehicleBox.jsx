@@ -1,9 +1,6 @@
 //------- Assets
 import { FaPlusCircle } from 'react-icons/fa';
 
-//------- Components
-import { newMessage } from '@/utils/box-effects'
-
 //------- Services
 import { newVehicle } from './services';
 
@@ -11,7 +8,7 @@ import { newVehicle } from './services';
 import { clientsData } from '@/data/form';
 
 //------- Utils
-import { is_input_of_type_select } from './utils/controller.utils'
+import { is_input_of_type_select, controller_of_request } from './utils/controller.utils'
 
 
 export function NewVehicleBox() {
@@ -34,16 +31,17 @@ export function NewVehicleBox() {
 
   async function submitHandler(e){
     e.preventDefault()
-    const boxLoading = document.querySelector(".ContainerBoxes__loadingContainer")
-    boxLoading.classList.add("ContainerBoxes__loadingContainer--active")
+    // const boxLoading = document.querySelector(".ContainerBoxes__loadingContainer")
+    // boxLoading.classList.add("ContainerBoxes__loadingContainer--active")
 
+    // const response = await newVehicle(body)
+    
+    // boxLoading.classList.remove("ContainerBoxes__loadingContainer--active")
+    
+    // const type = response.error ? "ERROR" : "OK"
+    // newMessage({ message:response.msg, type })
     const body = new FormData(e.target)
-    const response = await newVehicle(body)
-
-    boxLoading.classList.remove("ContainerBoxes__loadingContainer--active")
-
-    const type = response.error ? "ERROR" : "OK"
-    newMessage({ message:response.msg, type })
+    controller_of_request(async()=> await newVehicle(body), true)
 
     e.target.reset()
     document.querySelectorAll(".UploadForm__label").forEach(label=>{
@@ -58,7 +56,6 @@ export function NewVehicleBox() {
   //------- JSX return
   return (
       <form className='UploadForm__form' onSubmit={e=> submitHandler(e)}>
-      
         <div className='UploadForm__inputImageContainer'>
           <label className='UploadForm__labelImage' htmlFor="input-image"><FaPlusCircle/> Add</label>
           <input id="input-image" type="file"

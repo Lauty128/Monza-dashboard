@@ -2,10 +2,10 @@
 import { createContext, useState, useContext, useEffect } from "react";
 
 //----- Services
-import { getVehicles } from "../services";
+import { getVehicles } from "@/services";
 
 //----- Components
-import filtersHandler from '../utils/filters';
+import filtersHandler from '@/utils/filters';
 
 
 export const vehiclesContext = createContext(null)

@@ -1,8 +1,8 @@
 //----- Dependencies
-    import { vehiclesContext } from "@/context/vehicles.context";
+    import { VehicleContext } from "@/context/vehicles.context";
 
 //----- Hooks
-    import { useContext, useRef, useState } from 'react'
+    import { useRef, useState } from 'react'
 
 //----- Assets
     import { MdRestartAlt } from 'react-icons/md'
@@ -11,10 +11,10 @@
     import { clientsData } from "@/data/form";
 
 
-export function Filters(props){
+export function Filters(){
 
     //----- Hooks
-    const { setFilters } = useContext(vehiclesContext)
+    const { setFilters } = VehicleContext()
     const [ localFilters, setLocalFilters ] = useState({})
     const formRef = useRef(null)
     
@@ -82,6 +82,7 @@ export function Filters(props){
                 <option value="Toyota">Toyota</option>
                 <option value="Chevrolet">Chevrolet</option>
                 <option value="Ford">Ford</option>
+                <option value="Suzuki">Suzuki</option>
             </select>
 
             <select name="owner" className='FiltersContainer__select' 

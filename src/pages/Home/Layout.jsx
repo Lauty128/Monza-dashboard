@@ -25,7 +25,6 @@ export default function MainLayout(){
           <Outlet /> {/* Here the boxes are loaded  */}
 
           <MessageBox/>
-          
         </>
     )
 }

@@ -1,9 +1,10 @@
-const allFilters = [ 'owner','type','mark','sort',"sale_date" ]
+//----- Data
+import { filters_input } from '@/data/form'
 
 export default function filtersHandler(filters){
     let filtersString = ''
 
-    const newFilters = allFilters.map(name=>{ 
+    const newFilters = filters_input.map(name=>{ 
         if(filters[name]) return {name, value:filters[name]} 
     })
 
@@ -11,7 +12,6 @@ export default function filtersHandler(filters){
         if(filter === undefined) return
         filtersString += `${filter.name}=${filter.value}&`
     })
-   //if(find.owner === "Otros") find.owner = { $nin:["Sebastian del Soto","Sergio Castor","Juan Silverii","Negro Machi","Hernan Gorostieta"] }
 
     return `&${filtersString.slice(0,filtersString.length - 1)}`
 }

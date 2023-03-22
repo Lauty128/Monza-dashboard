@@ -1,5 +1,5 @@
 //---- Dependencies
-import { useParams } from "react-router-dom"
+import { useParams,Link } from "react-router-dom"
 import { useState , useEffect } from "react"
 
 //---- Services
@@ -8,6 +8,7 @@ import { getVehicle } from "@/services";
 
 //------- Utils
 import { newMessage } from '@/utils/box-effects'
+import { controller_of_request } from "./utils/controller.utils";
 
 //------- Data
 import { clientsData, typesData } from '@/data/form'
@@ -15,7 +16,7 @@ import { clientsData, typesData } from '@/data/form'
 
 export function EditVehicleBox() {
 
-  //------- Paramas
+  //------- Paramas & props
   const { id } = useParams()
 
   //------- Hooks
@@ -47,24 +48,28 @@ export function EditVehicleBox() {
 
   async function submitHandler(e){
     e.preventDefault()
-    const boxLoading = document.querySelector(".ContainerBoxes__loadingContainer")
-    boxLoading.classList.add("ContainerBoxes__loadingContainer--active")
-
-    const response = await modifyVehicle(id, values)
-    let type = "ERROR" 
-
-    if(response.statusText === "OK"){
-      e.target.reset()
-      type = "OK" 
-    }
+    controller_of_request(async()=> await modifyVehicle(id, values))
+    document.getElementById("comeBack_to_vehicleBox").click()
     
-    boxLoading.classList.remove("ContainerBoxes__loadingContainer--active")
-    newMessage({ type , message:response.data.msg });
+    //const boxLoading = document.querySelector(".ContainerBoxes__loadingContainer")
+    //boxLoading.classList.add("ContainerBoxes__loadingContainer--active")
+
+    // const response = await modifyVehicle(id, values)
+    // let type = "ERROR" 
+
+    // if(response.statusText === "OK"){
+    //   e.target.reset()
+    //   type = "OK" 
+    // }
+    
+    // boxLoading.classList.remove("ContainerBoxes__loadingContainer--active")
+    // newMessage({ type , message:response.data.msg });
   }
 
   //------- JSX return
   return (
     <>
+      <Link to={`/vehicle/${id}`}  id='comeBack_to_vehicleBox' className="Button--hidden"/>
       <div className="UploadForm__div--edit">
         <img src={vehicle !== null ? vehicle.image : ''} className="UploadForm__image--edit" />
         <h2 className="UploadForm__h2--edit">{ vehicle ? vehicle.mark + " " + vehicle.version : "" }</h2>
