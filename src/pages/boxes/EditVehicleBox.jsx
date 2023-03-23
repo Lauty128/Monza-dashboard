@@ -49,21 +49,8 @@ export function EditVehicleBox() {
   async function submitHandler(e){
     e.preventDefault()
     controller_of_request(async()=> await modifyVehicle(id, values))
+    
     document.getElementById("comeBack_to_vehicleBox").click()
-    
-    //const boxLoading = document.querySelector(".ContainerBoxes__loadingContainer")
-    //boxLoading.classList.add("ContainerBoxes__loadingContainer--active")
-
-    // const response = await modifyVehicle(id, values)
-    // let type = "ERROR" 
-
-    // if(response.statusText === "OK"){
-    //   e.target.reset()
-    //   type = "OK" 
-    // }
-    
-    // boxLoading.classList.remove("ContainerBoxes__loadingContainer--active")
-    // newMessage({ type , message:response.data.msg });
   }
 
   //------- JSX return

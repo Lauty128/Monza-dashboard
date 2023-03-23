@@ -17,6 +17,7 @@ export const typesData = [
 export const filters_input = [ 
     'owner',
     'type',
+    'fuel',
     'mark',
     'sort',
     "sale_date"

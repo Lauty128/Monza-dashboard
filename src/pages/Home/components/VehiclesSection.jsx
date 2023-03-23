@@ -1,20 +1,17 @@
-//---- Dependencies
-    import { useEffect } from 'react';
+//---- Context
     import { VehicleContext } from '@/context/vehicles.context';
 
 //----- Components
     import { VehicleCard, Page } from './';
 
 //----- Assets
-import { MdRestartAlt } from 'react-icons/md';
+    import { MdRestartAlt } from 'react-icons/md';
 
 
 export function VehiclesSection(){
 
     //----- Hooks
     const { vehicles, page, getNewPage } = VehicleContext()
-    
-    //useEffect(()=>{ filterVehicles() }, []) // Load the vehicles when the page loads
     
     //----- Variables
     const arrayofthree = [1,2,3]

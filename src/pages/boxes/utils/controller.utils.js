@@ -13,9 +13,8 @@ export const controller_of_request = async (cb, load=false) =>{
     const response = await cb()
     console.log(response);
     
-    if(response.statusText === "OK"){
+    if(response.status === 201 || response.status === 200){
         const data = response.data
-        console.log(data);
         const type = data.error ? "ERROR" : "OK"
         newMessage({ type, message:data.msg })
     }

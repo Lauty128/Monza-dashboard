@@ -91,6 +91,14 @@ export function Filters(){
                 { clientsData.map((client,index)=> <option key={index} value={client}>{client}</option>) }
             </select>
 
+            <select name="fuel"  className='FiltersContainer__select' 
+            onChange={e=> filtersChange(e.target)} >
+                <option value="">Combustible</option>
+                <option value="Nafta">Nafta</option>
+                <option value="GNC">GNC</option>
+                <option value="Diesel">Diesel</option>
+            </select>
+
             <div className="FiltersContainer__div">
                 <span>Tipo:</span>
                 <div className="FiltersContainer__checkboxContainer">

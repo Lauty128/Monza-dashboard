@@ -10,7 +10,7 @@ import { FaAngleLeft, FaAngleRight, FaTimesCircle,
         FaPen, FaTrashAlt, FaRegCheckCircle,} from 'react-icons/fa'
 
 //---- Utils
-import { newMessage } from '../../utils/box-effects'
+import { controller_of_request } from './utils/controller.utils'
 
 
 export function VehicleBox(){
@@ -70,11 +70,9 @@ export function VehicleBox(){
 
 
     async function buttonDelete(id){
-        const response = await deleteVehicle(id)
-        const data = response.data;
+        controller_of_request(async()=> await deleteVehicle(id), true)
 
-        const type = data.err ? "ERROR" : "OK";
-        newMessage({ type , message: data.msg })
+        document.getElementById("comeBack_to_home").click()
     }
 
     function handlerSlider(num){
@@ -90,6 +88,7 @@ export function VehicleBox(){
     //------- JSX return
     return(
         <>
+            <Link to={'/'}  id='comeBack_to_home' className="Button--hidden"></Link>
             <div className="VehicleBox__imagesContainer">
                 <div className="VehicleBox__image">
                     {/* <a href={slider[imageNum]} download className="VehicleBox__downloadImage">

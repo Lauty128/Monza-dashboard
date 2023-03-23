@@ -14,6 +14,5 @@ export async function modifyVehicle(id, body){
 
 export async function newVehicle(body){
     return await axios.post(`${import.meta.env.VITE_HOST_API}`, body)
-                    .then(data => data.data)
-                    .catch(error => error.response.data)
+                    .then(data => data)
 }

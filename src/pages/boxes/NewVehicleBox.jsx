@@ -31,21 +31,12 @@ export function NewVehicleBox() {
 
   async function submitHandler(e){
     e.preventDefault()
-    // const boxLoading = document.querySelector(".ContainerBoxes__loadingContainer")
-    // boxLoading.classList.add("ContainerBoxes__loadingContainer--active")
-
-    // const response = await newVehicle(body)
     
-    // boxLoading.classList.remove("ContainerBoxes__loadingContainer--active")
-    
-    // const type = response.error ? "ERROR" : "OK"
-    // newMessage({ message:response.msg, type })
     const body = new FormData(e.target)
     controller_of_request(async()=> await newVehicle(body), true)
 
     e.target.reset()
     document.querySelectorAll(".UploadForm__label").forEach(label=>{
-      console.log(label.nextElementSibling.type);
       if(!is_input_of_type_select(label.nextElementSibling.name)){
         label.classList.remove("UploadForm__label--active")
       }
