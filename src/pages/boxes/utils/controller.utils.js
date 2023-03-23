@@ -2,16 +2,15 @@
 import { newMessage } from "@/utils/box-effects"
 
 //---- data
-const inputs_of_type_select = ["type","owner"]
+const inputs_of_type_select = ["type","fuel","owner"]
 
 export const is_input_of_type_select = (name) => inputs_of_type_select.includes(name)
 
-export const controller_of_request = async (cb, load=false) =>{
+export async function controller_of_request(cb, load=false){
     if(load) document.querySelector(".ContainerBoxes__loadingContainer")
                 .classList.add("ContainerBoxes__loadingContainer--active")
     
     const response = await cb()
-    console.log(response);
     
     if(response.status === 201 || response.status === 200){
         const data = response.data
@@ -21,4 +20,12 @@ export const controller_of_request = async (cb, load=false) =>{
     
     if(load) document.querySelector(".ContainerBoxes__loadingContainer")
                 .classList.remove("ContainerBoxes__loadingContainer--active")
+}
+
+export function capture_image(image, state){
+    const reader = new FileReader()
+    
+    reader.readAsDataURL(image)
+
+    reader.onload = e=> state(e.target.result)
 }

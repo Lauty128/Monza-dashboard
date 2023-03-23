@@ -8,7 +8,7 @@
     import { MdRestartAlt } from 'react-icons/md'
 
 //----- Data
-    import { clientsData } from "@/data/form";
+    import { clientsData, fuelData } from "@/data/form";
 
 
 export function Filters(){
@@ -94,9 +94,9 @@ export function Filters(){
             <select name="fuel"  className='FiltersContainer__select' 
             onChange={e=> filtersChange(e.target)} >
                 <option value="">Combustible</option>
-                <option value="Nafta">Nafta</option>
-                <option value="GNC">GNC</option>
-                <option value="Diesel">Diesel</option>
+                {
+                    fuelData.map((fuel,index)=> <option key={index} value={fuel}>{fuel}</option>)
+                }
             </select>
 
             <div className="FiltersContainer__div">

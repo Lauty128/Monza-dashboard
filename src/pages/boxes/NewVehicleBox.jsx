@@ -1,3 +1,6 @@
+//------- Dependencies
+import { useState } from 'react';
+
 //------- Assets
 import { FaPlusCircle } from 'react-icons/fa';
 
@@ -5,15 +8,19 @@ import { FaPlusCircle } from 'react-icons/fa';
 import { newVehicle } from './services';
 
 //------- Data
-import { clientsData } from '@/data/form';
+import { clientsData, fuelData } from '@/data/form';
 
 //------- Utils
-import { is_input_of_type_select, controller_of_request } from './utils/controller.utils'
+import { is_input_of_type_select, controller_of_request, capture_image } from './utils/controller.utils'
 
 
 export function NewVehicleBox() {
 
+  //------- Hooks
+  const [ image , setImage ] = useState(null)
+
   //------- Functions
+
   function inputHandler(input){
     const label = input.previousElementSibling
 
@@ -48,9 +55,16 @@ export function NewVehicleBox() {
   return (
       <form className='UploadForm__form' onSubmit={e=> submitHandler(e)}>
         <div className='UploadForm__inputImageContainer'>
-          <label className='UploadForm__labelImage' htmlFor="input-image"><FaPlusCircle/> Add</label>
+          {
+            !image
+            ? <label className='UploadForm__labelImage' htmlFor="input-image"><FaPlusCircle/> Add</label>
+            : <div className="UploadForm__previewImageContainer">
+              <label className='UploadForm__labelImage UploadForm__labelImage--active' htmlFor="input-image"><FaPlusCircle/> Add</label>
+              <img src={image}  className='UploadForm__previewImage' />
+            </div>
+          }
           <input id="input-image" type="file"
-          name="image" accept="image/png, image/jpeg" />
+          name="image" accept="image/png, image/jpeg"  onChange={(e)=> capture_image(e.target.files[0], setImage)}/>
         </div>
 
         <div className='UploadForm__inputImagesContainer'>
@@ -78,15 +92,16 @@ export function NewVehicleBox() {
         </div>
 
         <div className='UploadForm__inputContainer'>
-          <label className='UploadForm__label' htmlFor="input-fuel">Combustible</label>
-          <input id="input-fuel" type="text" name="fuel" autoComplete='off'
-          onFocus={e=> inputHandler(e.target)} onBlur={e=> inputHandler(e.target)} />
+          <label className='UploadForm__label UploadForm__label--active' htmlFor="input-fuel">Combustible</label>
+          <select name="fuel" id="input-fuel" >
+            {
+              fuelData.map((fuel,index)=><option key={index} value={fuel}>{fuel}</option>)
+            }
+          </select>
         </div>
 
         <div className='UploadForm__inputContainer'>
           <label className='UploadForm__label UploadForm__label--active' htmlFor="input-type">Tipo</label>
-          {/* <input id="input-type" type="text" name="type" autoComplete='off'
-          onFocus={e=> inputHandler(e.target)} onBlur={e=> inputHandler(e.target)} /> */}
           <select name="type" id="input-type">
             <option value="Auto">Auto</option>
             <option value="Camioneta">Camioneta</option>

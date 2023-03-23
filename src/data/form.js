@@ -8,6 +8,12 @@ export const clientsData = [
     // "Otros"
 ]
 
+export const fuelData = [
+    "Nafta",
+    "GNC",
+    "Diesel"
+]
+
 export const typesData = [
     "Auto",
     "Camioneta",
