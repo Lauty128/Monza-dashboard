@@ -1,6 +1,7 @@
 //---- utils
 import { newMessage } from "@/utils/box-effects"
 
+
 //---- data
 const inputs_of_type_select = ["type","fuel","owner"]
 
@@ -20,6 +21,7 @@ export async function controller_of_request(cb, load=false){
     
     if(load) document.querySelector(".ContainerBoxes__loadingContainer")
                 .classList.remove("ContainerBoxes__loadingContainer--active")
+
 }
 
 export function capture_image(image, state){

@@ -7,7 +7,6 @@ import { modifyVehicle } from "./services"
 import { getVehicle } from "@/services";
 
 //------- Utils
-import { newMessage } from '@/utils/box-effects'
 import { controller_of_request } from "./utils/controller.utils";
 
 //------- Data
@@ -48,7 +47,7 @@ export function EditVehicleBox() {
 
   async function submitHandler(e){
     e.preventDefault()
-    controller_of_request(async()=> await modifyVehicle(id, values))
+    await controller_of_request(async()=> await modifyVehicle(id, values))
     
     document.getElementById("comeBack_to_vehicleBox").click()
   }

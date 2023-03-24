@@ -1,7 +1,7 @@
 export function newMessage({ type , message }){
     const messageBox = document.querySelector('.MessageBox')
 
-    document.querySelector(".MessageBox__message").textContent = message
+    document.querySelector(".MessageBox__message").innerHTML = message
     messageBox.classList.add(`MessageBox--${type}`)
     
     messageBox.classList.add('MessageBox--active')

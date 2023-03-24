@@ -9,11 +9,17 @@ import { Link, useParams } from "react-router-dom"
 import { FaAngleLeft, FaAngleRight, FaTimesCircle, 
         FaPen, FaTrashAlt, FaRegCheckCircle,} from 'react-icons/fa'
 
+//---- Context
+import { VehicleContext } from "@/context/vehicles.context"
+
 //---- Utils
 import { controller_of_request } from './utils/controller.utils'
 
 
 export function VehicleBox(){
+    //------- Context
+    const { getNewPage } = VehicleContext()
+
     //------- Hooks
     const { id } = useParams()
     const [ vehicle , setVehicle ] = useState(null)
@@ -36,43 +42,31 @@ export function VehicleBox(){
     //------- Functions
     function optionsSection(){
         return (
-            !vehicle.sale_date ?
-                <>
-                    <div className="VehicleBox__optionsContainer">
-                        <Link className="VehicleBox__option" to={`/vehicle/edit/${vehicle._id}`}>
-                            <FaPen /> Editar
-                        </Link>
-                        <Link className="VehicleBox__option"
-                        onClick={()=> buttonDelete(vehicle._id) }>
-                            <FaTrashAlt /> Eliminar
-                        </Link>
-                    </div>
-                    <span className="VehicleBox__price">
-                        { new Intl.NumberFormat("en-US", {
-                                style: "currency",
-                                currency: "ARS",
-                                minimumFractionDigits:0
-                        }).format(vehicle.price) }
-                    </span>
-                </> :
-                <>
-                    <span className="VehicleBox__price">
-                        { new Intl.NumberFormat("en-US", {
-                                    style: "currency",
-                                    currency: "ARS",
-                                    minimumFractionDigits:0
-                        }).format(vehicle.price) }
-                    </span>
-                    <span className="VehicleBox__soldMessage">VENDIDO!!</span>
-                </>
+            <>
+                <div className="VehicleBox__optionsContainer">
+                    <Link className="VehicleBox__option" to={`/vehicle/edit/${vehicle._id}`}>
+                        <FaPen /> Editar
+                    </Link>
+                    <Link className="VehicleBox__option" to={'/'}
+                    onClick={()=> buttonDelete(vehicle._id) }>
+                        <FaTrashAlt /> Eliminar
+                    </Link>
+                </div>
+                <span className="VehicleBox__price">
+                    { new Intl.NumberFormat("en-US", {
+                            style: "currency",
+                            currency: "ARS",
+                            minimumFractionDigits:0
+                    }).format(vehicle.price) }
+                </span>
+            </>
             )
     }
 
 
-    async function buttonDelete(id){
-        controller_of_request(async()=> await deleteVehicle(id), true)
-
-        document.getElementById("comeBack_to_home").click()
+    async function buttonDelete(id){ 
+        controller_of_request(async()=> await deleteVehicle(id)) 
+        getNewPage()
     }
 
     function handlerSlider(num){
@@ -88,7 +82,6 @@ export function VehicleBox(){
     //------- JSX return
     return(
         <>
-            <Link to={'/'}  id='comeBack_to_home' className="Button--hidden"></Link>
             <div className="VehicleBox__imagesContainer">
                 <div className="VehicleBox__image">
                     {/* <a href={slider[imageNum]} download className="VehicleBox__downloadImage">

@@ -19,10 +19,10 @@ export default function MainLayout(){
             <VehiclesContextProvider>
               <Filters />
               <VehiclesSection />
+
+              <Outlet /> {/* Here the boxes are loaded  */}
             </VehiclesContextProvider>
           </main>
-
-          <Outlet /> {/* Here the boxes are loaded  */}
 
           <MessageBox/>
         </>
