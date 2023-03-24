@@ -42,6 +42,7 @@ export function NewVehicleBox() {
     const body = new FormData(e.target)
     controller_of_request(async()=> await newVehicle(body), true)
 
+    setImage(null)
     e.target.reset()
     document.querySelectorAll(".UploadForm__label").forEach(label=>{
       if(!is_input_of_type_select(label.nextElementSibling.name)){
